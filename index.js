@@ -6,6 +6,6 @@ app.get("/", (req,res)=>{
     res.send("Provident Fund Project Backend is under construction")
 })
 
-app.listen(process.env.PORT, ()=>{
+app.listen(process.env.PORT || 3000, ()=>{
     console.log("Server is running")
 })

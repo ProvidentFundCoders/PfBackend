@@ -1,11 +1,28 @@
-require("dotenv").config();
-const express = require("express");
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+import allRoutes from "./routes/web.js";
+
+mongoose.connect(process.env.DBURL, { useNewUrlParser: true, useUnifiedTopology: true })
+.then(() => {
+    console.log("connection successfull");
+  })
+.catch((err) => console.log(err));
+
 const app = express();
 
-app.get("/", (req,res)=>{
-    res.send("Provident Fund Project Backend is under construction")
-})
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+  })
+);
 
-app.listen(process.env.PORT || 3000, ()=>{
-    console.log("Server is running")
-})
+
+allRoutes(app);
+
+app.listen(process.env.PORT, () => {
+  console.log("Server is running");
+});

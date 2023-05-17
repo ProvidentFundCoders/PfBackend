@@ -4,7 +4,7 @@ import bcrypt from "bcrypt"
 
 const register =  (req, res)=>{
   const data = req.body;
-  const isExisted  =  dbMethods.findByOne(Institution, {institutionName: req.body.instituteName});
+  const isExisted  =  dbMethods.findByOne(Institution, {institutionName: req.body.institutionName});
   isExisted.then(async (response)=>{
      if(response === false){
         const newInstitute = await dbMethods.create(Institution, data);

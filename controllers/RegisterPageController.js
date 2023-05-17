@@ -41,7 +41,7 @@ const getAllUserData = async (req, res)=>{
   const userData = await dbMethods.findByOne(User, {uniqueID: userid});
   const monthData = await dbMethods.findAll(Month, {$and: [{uniqueID: userid}, {year: year}]});
   const yearData = await dbMethods.findByOne(Year, {$and: [{uniqueID: userid}, {year: year}]})
-  res.json({userData, allMomths: monthData, yearData})
+  res.json({userData, allMonths: monthData, yearData})
 }
 
 const registerController = {

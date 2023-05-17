@@ -10,7 +10,6 @@ const institutionSchema = new mongoose.Schema({
         type: String,
         required: true
       }
-      // Institution.institutionName  and user.Institution should match and only then the data will be inserted
 })
 
 institutionSchema.pre('save', async function(next){

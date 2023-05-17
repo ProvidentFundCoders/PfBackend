@@ -14,7 +14,7 @@ const monthSchema = new mongoose.Schema({
         required: true
     },
     month:{
-        type: String,  //dropdown
+        type: String,  
         required: true
     },
     contribution:{

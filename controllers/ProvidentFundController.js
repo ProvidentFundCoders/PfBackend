@@ -26,7 +26,6 @@ const insertData = async (req, res) => {
     } = req.body;
 
     const isMonthExist = await isMonthExisted(month, userID, year);
-    console.log(isMonthExist); //remove kindly
     if (isMonthExist === false) {
       const monthData = {
         uniqueID: userID,
@@ -83,13 +82,14 @@ const insertYearRecord = async (userdata) => {
   interest,
   current_balance
  }
+
+ console.log(yearData);
  const newYearData = await dbMethods.create(Year, yearData);
 
 };
 
 const isMonthExisted = async (iMonth, userID, iYear) => {
   const exist = await dbMethods.findByOne(Month, {$and: [{uniqueID: userID}, {year: iYear},  {month: iMonth}]});
-  console.log(exist);  //remove kindly
     return exist;
 };
 

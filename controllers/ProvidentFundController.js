@@ -15,7 +15,7 @@ const insertData = async (req, res) => {
 
   if (verifiedInstitute) {
     const {
-      userid,
+      userID,
       year,
       month,
       contribution,
@@ -25,10 +25,10 @@ const insertData = async (req, res) => {
       remark,
     } = req.body;
 
-    const isMonthExist = await isMonthExisted(month, userid, year);
+    const isMonthExist = await isMonthExisted(month, userID, year);
     if (isMonthExist === false) {
       const monthData = {
-        uniqueID: userid,
+        uniqueID: userID,
         year,
         month,
         contribution,
@@ -66,15 +66,15 @@ const insertYearRecord = async (userdata) => {
   }else{
     prev_balance = await previousYearBalance(userdata.year);
   }
-  let others = await totalField("other", userdata.year, userdata.userid);
-  let total_contribution = await totalField("contribution",userdata.year, userdata.userid)+ others;
-  let total_withdrawal =await totalField("withdrawal",userdata.year, userdata.userid);
+  let others = await totalField("other", userdata.year, userdata.userID);
+  let total_contribution = await totalField("contribution",userdata.year, userdata.userID)+ others;
+  let total_withdrawal =await totalField("withdrawal",userdata.year, userdata.userID);
   let total = prev_balance+total_contribution-total_withdrawal;
   let interest = ((total*interestRate)/100)/totalNumberofMonth;
   let current_balance = total+interest;
 
  const yearData = {
-  uniqueID: userdata.userid,
+  uniqueID: userdata.userID,
   year: userdata.year,
   total_contribution,
   total_withdrawal,
@@ -86,8 +86,8 @@ const insertYearRecord = async (userdata) => {
 
 };
 
-const isMonthExisted = async (iMonth, userid, iYear) => {
-  const exist = await dbMethods.findByOne(Month, {$and: [{uniqueID: userid}, {year: iYear},  {month: iMonth}]});
+const isMonthExisted = async (iMonth, userID, iYear) => {
+  const exist = await dbMethods.findByOne(Month, {$and: [{uniqueID: userID}, {year: iYear},  {month: iMonth}]});
     return exist;
 };
 
@@ -97,8 +97,8 @@ const addFundata = async (data) => {
   else return false;
 };
 
-const totalField = async (fieldName,year, userid)=>{
-  const findFields = await dbMethods.findAll(Month, {$and: [{year: year}, {uniqueID: userid}]});
+const totalField = async (fieldName,year, userID)=>{
+  const findFields = await dbMethods.findAll(Month, {$and: [{year: year}, {uniqueID: userID}]});
 
   let total = 0;
   for (let i = 0; i < findFields.length; i++) {

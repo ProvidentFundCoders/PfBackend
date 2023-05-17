@@ -26,6 +26,7 @@ const insertData = async (req, res) => {
     } = req.body;
 
     const isMonthExist = await isMonthExisted(month, userID, year);
+    console.log(isMonthExist); //remove kindly
     if (isMonthExist === false) {
       const monthData = {
         uniqueID: userID,
@@ -45,7 +46,7 @@ const insertData = async (req, res) => {
         }
         res.json({success: true, ... record._doc});
       }else{
-        res.json({success: false, error: "Unknown error"})
+        res.json({success: false, error: "Error: Record Not Inserted"})
       }
       
     } else {
@@ -88,6 +89,7 @@ const insertYearRecord = async (userdata) => {
 
 const isMonthExisted = async (iMonth, userID, iYear) => {
   const exist = await dbMethods.findByOne(Month, {$and: [{uniqueID: userID}, {year: iYear},  {month: iMonth}]});
+  console.log(exist);  //remove kindly
     return exist;
 };
 

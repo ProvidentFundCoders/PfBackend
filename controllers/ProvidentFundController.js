@@ -5,7 +5,6 @@ import Year from "../models/Year.js";
 import mongoose from "mongoose";
 
 const interestRate = 7.1;
-let totalNumberofMonth;
 
 const insertData = async (req, res) => {
   const verifiedInstitute = await InstitutionController.verifyInstitue(
@@ -63,6 +62,7 @@ const insertYearRecord = async (userdata) => {
   let prev_balance;
   if(userdata.year === process.env.START_YEAR){
      prev_balance = userdata.previous_contribution;
+     console.log(prev_balance)
   }else{
     prev_balance = await previousYearBalance(userdata.year);
   }
@@ -70,7 +70,7 @@ const insertYearRecord = async (userdata) => {
   let total_contribution = await totalField("contribution",userdata.year, userdata.userID)+ others;
   let total_withdrawal =await totalField("withdrawal",userdata.year, userdata.userID);
   let total = prev_balance+total_contribution-total_withdrawal;
-  let interest = ((total*interestRate)/100)/totalNumberofMonth;
+  let interest = (total*(interestRate/100));
   let current_balance = total+interest;
 
  const yearData = {
@@ -106,7 +106,6 @@ const totalField = async (fieldName,year, userID)=>{
   for (let i = 0; i < findFields.length; i++) {
      total += findFields[i][fieldName];
   }
-  totalNumberofMonth = findFields.length;
    return total;
 }
 

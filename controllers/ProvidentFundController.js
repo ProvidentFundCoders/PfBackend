@@ -61,7 +61,7 @@ const insertData = async (req, res) => {
 const insertYearRecord = async (userdata) => {
   let prev_balance;
   if(userdata.year === process.env.START_YEAR){
-     prev_balance = userdata.previous_contribution;
+     prev_balance = parseInt(userdata.previous_contribution);
      console.log(typeof prev_balance)
   }else{
     prev_balance = await previousYearBalance(userdata.year);

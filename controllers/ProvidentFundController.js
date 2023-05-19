@@ -70,6 +70,7 @@ const insertYearRecord = async (userdata) => {
   let total_contribution = await totalField("contribution",userdata.year, userdata.userID)+ others;
   let total_withdrawal =await totalField("withdrawal",userdata.year, userdata.userID);
   let total = prev_balance+total_contribution-total_withdrawal;
+  console.log(total+ " "+ interestRate)
   let interest = total*(interestRate/100);
   console.log(interest);
   let current_balance = total+interest;

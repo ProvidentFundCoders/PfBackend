@@ -40,7 +40,11 @@ const monthSchema = new mongoose.Schema({
     verified:{
         type: Boolean,
         required: false,
-    } 
+    },
+    notVerifiedReason: {
+        type: String,
+        required: false
+    }
 })
 
 const Month = mongoose.model('month', monthSchema);

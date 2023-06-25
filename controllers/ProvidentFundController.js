@@ -121,7 +121,7 @@ const previousYearBalance = async (year)=>{
 
 const updateFundData = async (req, res)=>{
   const data = {... req.body};
-  const update = await dbMethods.updateOneRecord(Month,{month: req.body.month}, {... req.body})
+  const update = await dbMethods.updateOneRecord(Month,{month: req.body.month, year: req.body.year, uniqueId: req.body.userID}, {... req.body})
   res.json(update)
 }
 
